@@ -4,21 +4,21 @@ if(isset($_POST['submit'])){
     date_default_timezone_set('Africa/Nairobi');
 
     // Safaricom API credentials
-    $consumerKey = '4bvSu7kv6XOSlrFMkuH1bCn3ntAhAZYo29ALKZ2P21lEpbxB';
-    $consumerSecret = 'XHbnEvn8XRGuAzCXicI07IzeJnzMwSwAA0r3w6TYWCiVYwPrAFeHjbC0A2MAQRa6';
+    $consumerKey = '4YwHi4pVqVCNKYzGiFXG6fS9P5gFz9KhvjYuLEde2ysyeM5U';
+    $consumerSecret = '5wp0yrE3YlEGD6ihauNOgTsC3KtO9xiTdVSeSe16uUwz4FodJD2LWUHn61wTiQwb';
     
     // Function to generate the access token using consumer key and secret
     function generateAccessToken($consumerKey, $consumerSecret) {
         $credentials = base64_encode($consumerKey . ':' . $consumerSecret);
-        $url = 'https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials';
+        $url = 'https://api.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials';
 
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_URL, $url);
         // Setting headers including authorization and content type
         curl_setopt($curl, CURLOPT_HTTPHEADER, array('Authorization: Basic ' . $credentials, 'Content-Type:application/json'));
-        curl_setopt($curl, CURLOPT_HEADER, false);
+        curl_setopt($curl, CURLOPT_HEADER, true);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false); // Skip SSL verification for this sandbox request
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, true); // Skip SSL verification for this sandbox request
 
         $curl_response = curl_exec($curl);
         $http_status = curl_getinfo($curl, CURLINFO_HTTP_CODE);
@@ -94,7 +94,7 @@ if(isset($_POST['submit'])){
 
     // Initialize cURL for the STK push request
     $curl = curl_init();
-    curl_setopt($curl, CURLOPT_URL, 'https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest');
+    curl_setopt($curl, CURLOPT_URL, 'https://api.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials');
     curl_setopt($curl, CURLOPT_HTTPHEADER, $stkheader);
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($curl, CURLOPT_POST, true);
@@ -121,4 +121,6 @@ if(isset($_POST['submit'])){
 } else {
     echo 'Error: Submit button not clicked.'; // Error handling if the form was not submitted
 }
+
+
 
